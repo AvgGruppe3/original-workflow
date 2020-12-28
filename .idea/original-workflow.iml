@@ -9,7 +9,9 @@
     <facet type="jpa" name="JPA">
       <configuration>
         <setting name="validation-enabled" value="true" />
-        <datasource-mapping />
+        <datasource-mapping>
+          <factory-entry name="original-workflow" />
+        </datasource-mapping>
         <naming-strategy-map />
       </configuration>
     </facet>
@@ -42,8 +44,6 @@
     <orderEntry type="library" name="Maven: org.camunda.commons:camunda-commons-typed-values:7.14.0" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.5.3" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:2.1" level="project" />
-    <orderEntry type="library" name="Maven: org.camunda.connect:camunda-connect-core:1.5.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.camunda.connect:camunda-connect-connectors-all:1.5.0" level="project" />
     <orderEntry type="library" name="Maven: commons-dbcp:commons-dbcp:1.4" level="project" />
     <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.2.7.RELEASE" level="project" />
@@ -62,9 +62,7 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.11.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.11.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.11.0" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.11.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.0" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-jersey:2.3.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-json:2.3.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.0" level="project" />
@@ -120,9 +118,9 @@
     <orderEntry type="library" name="Maven: org.camunda.bpm.webapp:camunda-webapp-webjar:7.14.0" level="project" />
     <orderEntry type="library" name="Maven: org.camunda.bpm:camunda-engine-plugin-spin:7.14.0" level="project" />
     <orderEntry type="library" name="Maven: org.camunda.spin:camunda-spin-core:1.10.0" level="project" />
+    <orderEntry type="library" name="Maven: org.camunda.bpm:camunda-engine-plugin-connect:7.14.0" level="project" />
     <orderEntry type="library" name="Maven: org.camunda.spin:camunda-spin-dataformat-all:1.10.0" level="project" />
     <orderEntry type="library" name="Maven: org.camunda.commons:camunda-commons-logging:1.9.0" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
     <orderEntry type="library" name="Maven: org.camunda.commons:camunda-commons-utils:1.9.0" level="project" />
     <orderEntry type="library" name="Maven: com.h2database:h2:1.4.200" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:2.3.1.RELEASE" level="project" />
@@ -141,5 +139,17 @@
     <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:3.4.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:5.2.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.2.7.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.camunda.bpm.extension:camunda-bpm-mail-core:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.camunda.connect:camunda-connect-core:1.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.camunda.connect:camunda-connect-connectors-all:1.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.camunda.spin:camunda-spin-dataformat-json-jackson:1.10.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.11.0" level="project" />
+    <orderEntry type="library" name="Maven: com.jayway.jsonpath:json-path:2.4.0" level="project" />
+    <orderEntry type="library" name="Maven: net.minidev:json-smart:2.3" level="project" />
+    <orderEntry type="library" name="Maven: net.minidev:accessors-smart:1.2" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.6.2" level="project" />
+    <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
   </component>
 </module>
