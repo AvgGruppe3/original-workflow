@@ -27,7 +27,7 @@ POST: http://localhost:8080/engine-rest/task/{userTaskId}/complete
 Angebot erstellen:
 {
   "variables": {
-    "angebot": {"value":"Text","type":"String"}
+    "text": {"value":"Text","type":"String"}
   }
 }
 
