@@ -35,7 +35,7 @@
     <bpmn:startEvent id="StartEvent_1" name="Antrag">
       <bpmn:outgoing>Flow_1p0j0wy</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="AntragUeberpruefen" name="Antrag überprüfen" camunda:formKey="Antrag Ueberpruefen">
+    <bpmn:userTask id="AntragUeberpruefen" name="Antrag überprüfen">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="antragOk" label="Antrag Ok?" type="boolean" />
@@ -78,7 +78,7 @@
       <bpmn:outgoing>Flow_06ha5s5</bpmn:outgoing>
       <bpmn:outgoing>Flow_1fqianh</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Risikobewertung" name="initiale Risiko-bewertung" camunda:formKey="initiale Risikobewertung">
+    <bpmn:userTask id="Risikobewertung" name="initiale Risiko-bewertung">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="risikobewertung" label="Risikobewertung" type="long" />
@@ -125,7 +125,7 @@
       <bpmn:incoming>Flow_095gkrb</bpmn:incoming>
       <bpmn:outgoing>Flow_1dqx7og</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="Activity_0830f1b" name="Angebot erstellen" camunda:formKey="AngebotErstellen">
+    <bpmn:userTask id="Activity_0830f1b" name="Angebot erstellen">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="text" label="Text" type="string" />
