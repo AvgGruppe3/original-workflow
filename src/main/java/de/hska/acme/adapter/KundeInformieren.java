@@ -4,6 +4,7 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 
 public class KundeInformieren implements JavaDelegate {
+
     @Override
     public void execute(DelegateExecution execution) {
         execution.setVariable("text",

@@ -2,7 +2,6 @@ package de.hska.acme.adapter.entity;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class Customer {
@@ -13,8 +12,6 @@ public class Customer {
     private String birthDate;
     private long riskScore;
     private List<String> contracts;
-
-
 
     public long getId() {
         return id;
@@ -64,7 +61,7 @@ public class Customer {
         this.contracts = contracts;
     }
 
-    public Customer createFromProcessVariables(DelegateExecution execution){
+    public Customer createFromProcessVariables(DelegateExecution execution) {
         setPrename(String.valueOf(execution.getVariable("nachname")));
         setSurname(String.valueOf(execution.getVariable("vorname")));
         setBirthDate(String.valueOf(execution.getVariable("geburtsdatum")));

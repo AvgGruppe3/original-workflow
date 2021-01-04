@@ -23,6 +23,14 @@ public class KundendatenAbrufen implements JavaDelegate {
     @Value("${json.server.url}")
     private String url;
 
+    private static String getBirthDate(DelegateExecution execution) {
+        var birthDate = (Date) execution.getVariable("geburtsdatum");
+
+        var pattern = "yyyy-MM-dd";
+        var simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(birthDate);
+    }
+
     @Override
     public void execute(DelegateExecution execution) throws Exception {
 
@@ -37,11 +45,13 @@ public class KundendatenAbrufen implements JavaDelegate {
 
     private boolean isNewCustomer(DelegateExecution execution, ResponseEntity<String> response) {
         boolean newCustomer = true;
-        if(response.hasBody()){
+        if (response.hasBody()) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                List<Customer> kunden = mapper.readValue(response.getBody(), new TypeReference<List<Customer>>(){});
-                if(kunden.size()>0){
+                List<Customer> kunden = mapper
+                        .readValue(response.getBody(), new TypeReference<List<Customer>>() {
+                        });
+                if (kunden.size() > 0) {
                     long riskScore = kunden.get(0).getRiskScore();
                     execution.setVariable("risikobewertung", riskScore);
                     newCustomer = false;
@@ -53,20 +63,12 @@ public class KundendatenAbrufen implements JavaDelegate {
         return newCustomer;
     }
 
-    private Map<String, String> queryParams(DelegateExecution execution){
+    private Map<String, String> queryParams(DelegateExecution execution) {
 
         var prename = (String) execution.getVariable("vorname");
         var surname = (String) execution.getVariable("nachname");
         var birthDate = getBirthDate(execution);
 
-        return Map.of("prename", prename, "surname", surname, "birthDate", birthDate );
-    }
-
-    private static String getBirthDate(DelegateExecution execution) {
-        var birthDate = (Date) execution.getVariable("geburtsdatum");
-
-        var pattern = "yyyy-MM-dd";
-        var simpleDateFormat = new SimpleDateFormat(pattern);
-        return simpleDateFormat.format(birthDate);
+        return Map.of("prename", prename, "surname", surname, "birthDate", birthDate);
     }
 }
