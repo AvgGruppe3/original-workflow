@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import connectjar.org.apache.http.client.utils.URIBuilder;
-import de.hska.acme.adapter.entity.Kunde;
+import de.hska.acme.adapter.entity.Customer;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +40,7 @@ public class KundendatenAbrufen implements JavaDelegate {
         if(response.hasBody()){
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                List<Kunde> kunden = mapper.readValue(response.getBody(), new TypeReference<List<Kunde>>(){});
+                List<Customer> kunden = mapper.readValue(response.getBody(), new TypeReference<List<Customer>>(){});
                 if(kunden.size()>0){
                     long riskScore = kunden.get(0).getRiskScore();
                     execution.setVariable("risikobewertung", riskScore);

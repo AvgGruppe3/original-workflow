@@ -1,6 +1,6 @@
 package de.hska.acme.adapter;
 
-import de.hska.acme.adapter.entity.Kunde;
+import de.hska.acme.adapter.entity.Customer;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,14 +16,10 @@ public class KundendatenAbspeichern implements JavaDelegate {
     private String url;
 
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
-        Kunde neuKunde = new Kunde();
-        neuKunde.setPrename(String.valueOf(execution.getVariable("nachname")));
-        neuKunde.setSurname(String.valueOf(execution.getVariable("vorname")));
-        neuKunde.setBirthDate(String.valueOf(execution.getVariable("geburtsdatum")));
-        neuKunde.setRiskScore((Long) execution.getVariable("risikobewertung"));
+    public void execute(DelegateExecution execution) {
+        Customer neuCustomer = new Customer().createFromProcessVariables(execution);
 
         RestTemplate restTemplate = new RestTemplate();
-        URI location = restTemplate.postForLocation(url, neuKunde);
+        URI location = restTemplate.postForLocation(url, neuCustomer);
     }
 }
