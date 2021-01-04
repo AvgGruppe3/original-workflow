@@ -5,3 +5,5 @@ camunda.bpm.admin-user:
   password: DemoDemo
 
 json.server.url: http://localhost:3000/customers
+
+file.name: localCustomers.json

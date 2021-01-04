@@ -5,13 +5,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hska.acme.adapter.entity.Customer;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class LokalSpeichern implements JavaDelegate {
+
+    @Value("${file.name}")
+    private String fileName;
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
@@ -22,7 +28,6 @@ public class LokalSpeichern implements JavaDelegate {
 
     private void writeToFile(Customer newCustomer) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String fileName = "localCustomers.json";
         File log = new File(fileName);
         List<Customer> customers = new ArrayList<>();
         if(log.exists()){
