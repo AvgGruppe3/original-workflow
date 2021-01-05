@@ -1,25 +1,33 @@
 package de.hska.acme.adapter;
 
-import de.hska.acme.adapter.entity.Customer;
+import de.hska.acme.entity.Customer;
+import de.hska.acme.exception.BusinessException;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
 
 @Component
 public class KundendatenAbspeichern implements JavaDelegate {
 
-    @Value("${json.server.url}")
-    private String url;
+    private final RestClient restClient;
+
+    @Autowired
+    public KundendatenAbspeichern(RestClient restClient) {
+        this.restClient = restClient;
+    }
 
     @Override
-    public void execute(DelegateExecution execution) {
-        Customer neuCustomer = new Customer().createFromProcessVariables(execution);
-
-        RestTemplate restTemplate = new RestTemplate();
-        URI location = restTemplate.postForLocation(url, neuCustomer);
+    public void execute(DelegateExecution execution) throws Exception {
+        Customer customer = new Customer().createFromProcessVariablesWithRiskScore(execution);
+        try {
+            Customer responseCustomer = restClient.getCustomer(customer);
+            customer.setId(responseCustomer.getId());
+            customer.setContracts(responseCustomer.getContracts());
+            restClient.put(customer);
+        }catch(BusinessException e){
+            restClient.post(customer);
+        }
     }
 }

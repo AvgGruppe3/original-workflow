@@ -1,8 +1,8 @@
-package de.hska.acme.adapter.entity;
+package de.hska.acme.entity;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class Customer {
@@ -10,10 +10,9 @@ public class Customer {
     private long id;
     private String prename;
     private String surname;
-    private String birthDate;
+    private Date birthDate;
     private long riskScore;
     private List<String> contracts;
-
 
 
     public long getId() {
@@ -40,11 +39,11 @@ public class Customer {
         this.surname = surname;
     }
 
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -64,11 +63,18 @@ public class Customer {
         this.contracts = contracts;
     }
 
+    public Customer createFromProcessVariablesWithRiskScore(DelegateExecution execution){
+        setPrename(String.valueOf(execution.getVariable("nachname")));
+        setSurname(String.valueOf(execution.getVariable("vorname")));
+        setBirthDate((Date) execution.getVariable("geburtsdatum"));
+        setRiskScore((Long) execution.getVariable("risikobewertung"));
+        return this;
+    }
+
     public Customer createFromProcessVariables(DelegateExecution execution){
         setPrename(String.valueOf(execution.getVariable("nachname")));
         setSurname(String.valueOf(execution.getVariable("vorname")));
-        setBirthDate(String.valueOf(execution.getVariable("geburtsdatum")));
-        setRiskScore((Long) execution.getVariable("risikobewertung"));
+        setBirthDate((Date) execution.getVariable("geburtsdatum"));
         return this;
     }
 }
