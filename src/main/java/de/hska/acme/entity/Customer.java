@@ -63,7 +63,7 @@ public class Customer {
         this.contracts = contracts;
     }
 
-    public Customer createFromProcessVariablesWithRiskScore(DelegateExecution execution){
+    public Customer createFromProcessVariablesWithRiskScore(DelegateExecution execution) {
         setPrename(String.valueOf(execution.getVariable("nachname")));
         setSurname(String.valueOf(execution.getVariable("vorname")));
         setBirthDate((Date) execution.getVariable("geburtsdatum"));
@@ -71,7 +71,7 @@ public class Customer {
         return this;
     }
 
-    public Customer createFromProcessVariables(DelegateExecution execution){
+    public Customer createFromProcessVariables(DelegateExecution execution) {
         setPrename(String.valueOf(execution.getVariable("nachname")));
         setSurname(String.valueOf(execution.getVariable("vorname")));
         setBirthDate((Date) execution.getVariable("geburtsdatum"));

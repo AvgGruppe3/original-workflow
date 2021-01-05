@@ -26,7 +26,7 @@ public class KundendatenAbspeichern implements JavaDelegate {
             customer.setId(responseCustomer.getId());
             customer.setContracts(responseCustomer.getContracts());
             restClient.put(customer);
-        }catch(BusinessException e){
+        } catch (BusinessException e) {
             restClient.post(customer);
         }
     }

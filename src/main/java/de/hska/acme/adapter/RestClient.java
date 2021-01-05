@@ -19,13 +19,20 @@ import java.util.Map;
 @Component
 public class RestClient {
 
+    private final RestTemplate restTemplate;
     @Value("${json.server.url}")
     private String url;
 
-    private final RestTemplate restTemplate;
-
     public RestClient(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
+    }
+
+    private static String getBirthDate(Customer customer) {
+        var birthDate = customer.getBirthDate();
+
+        var pattern = "yyyy-MM-dd";
+        var simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(birthDate);
     }
 
     public ResponseEntity<String> get(Customer customer) throws Exception {
@@ -42,16 +49,16 @@ public class RestClient {
 
     public Customer getCustomer(Customer customer) throws Exception {
         ResponseEntity<String> entity = get(customer);
-        if(entity.hasBody()) {
+        if (entity.hasBody()) {
             ObjectMapper mapper = new ObjectMapper();
-            List<Customer> customers = mapper.readValue(entity.getBody(), new TypeReference<List<Customer>>() {});
+            List<Customer> customers = mapper.readValue(entity.getBody(), new TypeReference<List<Customer>>() {
+            });
             if (customers.size() > 0) {
                 return customers.get(0);
             }
         }
         throw new BusinessException("GET-Request failed body is empty");
     }
-
 
     public void post(Customer customer) throws BusinessException {
         ResponseEntity<String> entity = restTemplate.postForEntity(url, customer, String.class);
@@ -62,23 +69,15 @@ public class RestClient {
     }
 
     public void put(Customer customer) {
-        restTemplate.put(url+ "/"+ customer.getId(), customer);
+        restTemplate.put(url + "/" + customer.getId(), customer);
     }
 
-    private Map<String, String> queryParams(Customer customer){
+    private Map<String, String> queryParams(Customer customer) {
 
         var prename = customer.getPrename();
         var surname = customer.getSurname();
         var birthDate = getBirthDate(customer);
 
-        return Map.of("prename", prename, "surname", surname, "birthDate", birthDate );
-    }
-
-    private static String getBirthDate(Customer customer) {
-        var birthDate = customer.getBirthDate();
-
-        var pattern = "yyyy-MM-dd";
-        var simpleDateFormat = new SimpleDateFormat(pattern);
-        return simpleDateFormat.format(birthDate);
+        return Map.of("prename", prename, "surname", surname, "birthDate", birthDate);
     }
 }
