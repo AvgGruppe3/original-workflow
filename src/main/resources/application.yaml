@@ -4,6 +4,13 @@ camunda.bpm.admin-user:
   id: Gruppe03
   password: DemoDemo
 
+spring.mail.host: 192.168.0.171
+spring.mail.port: 5025
+spring.mail.properties.mail.smtp.auth: false
+spring.mail.properties.mail.smtp.starttls.enable: false
+
 json.server.url: http://localhost:3000/customers
 
 file.name: localCustomers.json
+
+

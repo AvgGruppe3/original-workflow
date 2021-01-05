@@ -2,6 +2,8 @@ package de.hska.acme.adapter;
 
 import de.hska.acme.entity.Customer;
 import de.hska.acme.exception.BusinessException;
+import de.hska.acme.service.RestClient;
+import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class KundendatenAbspeichern implements JavaDelegate {
             restClient.put(customer);
         } catch (BusinessException e) {
             restClient.post(customer);
+        } catch(Exception e){
+            throw new BpmnError("Error");
         }
     }
 }

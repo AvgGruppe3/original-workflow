@@ -1,23 +1,29 @@
-package de.hska.acme.adapter;
+package de.hska.acme.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import connectjar.org.apache.http.client.utils.URIBuilder;
 import de.hska.acme.entity.Customer;
 import de.hska.acme.exception.BusinessException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
-@Component
+@Service
 public class RestClient {
+
+    private final Logger logger = LoggerFactory.getLogger(RestClient.class);
 
     private final RestTemplate restTemplate;
     @Value("${json.server.url}")
@@ -25,14 +31,6 @@ public class RestClient {
 
     public RestClient(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
-    }
-
-    private static String getBirthDate(Customer customer) {
-        var birthDate = customer.getBirthDate();
-
-        var pattern = "yyyy-MM-dd";
-        var simpleDateFormat = new SimpleDateFormat(pattern);
-        return simpleDateFormat.format(birthDate);
     }
 
     public ResponseEntity<String> get(Customer customer) throws Exception {
@@ -76,7 +74,7 @@ public class RestClient {
 
         var prename = customer.getPrename();
         var surname = customer.getSurname();
-        var birthDate = getBirthDate(customer);
+        var birthDate= customer.getBirthDateAsString();
 
         return Map.of("prename", prename, "surname", surname, "birthDate", birthDate);
     }

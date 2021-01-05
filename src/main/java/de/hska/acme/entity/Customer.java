@@ -1,16 +1,28 @@
 package de.hska.acme.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class Customer {
 
     private long id;
     private String prename;
     private String surname;
-    private Date birthDate;
+
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate birthDate;
+
     private long riskScore;
     private List<String> contracts;
 
@@ -39,11 +51,16 @@ public class Customer {
         this.surname = surname;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public String getBirthDateAsString(){
+        var pattern = "yyyy/MM/dd";
+        return birthDate.format(DateTimeFormatter.ofPattern(pattern));
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -63,18 +80,26 @@ public class Customer {
         this.contracts = contracts;
     }
 
-    public Customer createFromProcessVariablesWithRiskScore(DelegateExecution execution) {
-        setPrename(String.valueOf(execution.getVariable("nachname")));
-        setSurname(String.valueOf(execution.getVariable("vorname")));
-        setBirthDate((Date) execution.getVariable("geburtsdatum"));
+    public Customer createFromProcessVariablesWithRiskScore(DelegateExecution execution) throws ParseException {
+        createFromProcessVariables(execution);
         setRiskScore((Long) execution.getVariable("risikobewertung"));
         return this;
     }
 
-    public Customer createFromProcessVariables(DelegateExecution execution) {
-        setPrename(String.valueOf(execution.getVariable("nachname")));
-        setSurname(String.valueOf(execution.getVariable("vorname")));
-        setBirthDate((Date) execution.getVariable("geburtsdatum"));
+    public Customer createFromProcessVariables(DelegateExecution execution) throws ParseException {
+        setPrename(String.valueOf(execution.getVariable("vorname")));
+        setSurname(String.valueOf(execution.getVariable("nachname")));
+        setBirthDate(parseBirthDate(String.valueOf(execution.getVariable("geburtsdatum"))));
         return this;
     }
+
+    private LocalDate parseBirthDate(String birthDate) throws ParseException {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        cal.setTime(sdf.parse(birthDate));
+        return cal.getTime().toInstant().atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+    }
+
 }

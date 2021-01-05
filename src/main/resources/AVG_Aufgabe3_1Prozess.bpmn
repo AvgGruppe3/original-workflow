@@ -7,23 +7,23 @@
     <bpmn:laneSet id="LaneSet_1qne755">
       <bpmn:lane id="Lane_1bp0r3h">
         <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>AntragUeberpruefen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_AntragUeberpruefen</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0oe2l1y</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>KundendatenAbrufen</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>KundenInformieren</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_KundendatenAbrufen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_KundenInformieren</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_093rdag</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0cwyuz3</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Risikobewertung</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>KundendatenAbspeichern</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0haiax7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_Risikobewertung</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_KundendatenAbspeichern</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_EmailVersenden</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0aef2xb</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>AntragAblehnen</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0830f1b</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_AntragAblehnen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_AngebotErstellen</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0wm2m0v</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1j5a2yh</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0y0rzd9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_LokalSpeichern</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0objj7p</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0emdgpx</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_EmailVersenden</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1shxz53</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1pl86np</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1g9n15u</bpmn:flowNodeRef>
@@ -32,23 +32,23 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_006az6s">
         <bpmn:flowNodeRef>Event_0rurf1j</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>SachbearbeiterErinnern</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_SachbearbeiterErinnern</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:sequenceFlow id="Flow_10ppctb" sourceRef="AntragUeberpruefen" targetRef="Gateway_0oe2l1y" />
-    <bpmn:sequenceFlow id="Flow_09xvczo" name="Antrag korrekt" sourceRef="Gateway_0oe2l1y" targetRef="KundendatenAbrufen">
+    <bpmn:sequenceFlow id="Flow_10ppctb" sourceRef="UserTask_AntragUeberpruefen" targetRef="Gateway_0oe2l1y" />
+    <bpmn:sequenceFlow id="Flow_09xvczo" name="Antrag korrekt" sourceRef="Gateway_0oe2l1y" targetRef="ServiceTask_KundendatenAbrufen">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${antragOk == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0jeoh4c" sourceRef="KundendatenAbrufen" targetRef="Gateway_093rdag" />
-    <bpmn:sequenceFlow id="Flow_095gkrb" name="hoch" sourceRef="Gateway_0wm2m0v" targetRef="AntragAblehnen">
+    <bpmn:sequenceFlow id="Flow_0jeoh4c" sourceRef="ServiceTask_KundendatenAbrufen" targetRef="Gateway_093rdag" />
+    <bpmn:sequenceFlow id="Flow_095gkrb" name="hoch" sourceRef="Gateway_0wm2m0v" targetRef="ServiceTask_AntragAblehnen">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${risikobewertung &gt; 8000}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0mk3s14" name="niedrig/mittel" sourceRef="Gateway_0wm2m0v" targetRef="Activity_0830f1b" />
-    <bpmn:sequenceFlow id="Flow_1tjt2xm" sourceRef="Activity_0830f1b" targetRef="Gateway_0aef2xb" />
-    <bpmn:sequenceFlow id="Flow_0vwzoae" sourceRef="Activity_0haiax7" targetRef="Event_1shxz53" />
-    <bpmn:sequenceFlow id="Flow_1p0j0wy" sourceRef="StartEvent_1" targetRef="AntragUeberpruefen" />
-    <bpmn:sequenceFlow id="Flow_1dqx7og" sourceRef="AntragAblehnen" targetRef="Gateway_0aef2xb" />
-    <bpmn:sequenceFlow id="Flow_1wx4jk9" sourceRef="Gateway_0aef2xb" targetRef="Activity_0haiax7" />
+    <bpmn:sequenceFlow id="Flow_0mk3s14" name="niedrig/mittel" sourceRef="Gateway_0wm2m0v" targetRef="UserTask_AngebotErstellen" />
+    <bpmn:sequenceFlow id="Flow_1tjt2xm" sourceRef="UserTask_AngebotErstellen" targetRef="Gateway_0aef2xb" />
+    <bpmn:sequenceFlow id="Flow_0vwzoae" sourceRef="ServiceTask_EmailVersenden" targetRef="Event_1shxz53" />
+    <bpmn:sequenceFlow id="Flow_1p0j0wy" sourceRef="StartEvent_1" targetRef="UserTask_AntragUeberpruefen" />
+    <bpmn:sequenceFlow id="Flow_1dqx7og" sourceRef="ServiceTask_AntragAblehnen" targetRef="Gateway_0aef2xb" />
+    <bpmn:sequenceFlow id="Flow_1wx4jk9" sourceRef="Gateway_0aef2xb" targetRef="ServiceTask_EmailVersenden" />
     <bpmn:sequenceFlow id="Flow_06ha5s5" name="Bestandskunde" sourceRef="Gateway_093rdag" targetRef="Gateway_1j5a2yh">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${nk == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -56,14 +56,14 @@
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${nk == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1rsg26w" sourceRef="Gateway_1j5a2yh" targetRef="Gateway_0wm2m0v" />
-    <bpmn:sequenceFlow id="Flow_15aa8gw" sourceRef="Risikobewertung" targetRef="KundendatenAbspeichern" />
+    <bpmn:sequenceFlow id="Flow_15aa8gw" sourceRef="UserTask_Risikobewertung" targetRef="ServiceTask_KundendatenAbspeichern" />
     <bpmn:startEvent id="StartEvent_1" name="Antrag">
       <bpmn:outgoing>Flow_1p0j0wy</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="AntragUeberpruefen" name="Antrag überprüfen">
+    <bpmn:userTask id="UserTask_AntragUeberpruefen" name="Antrag überprüfen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="antragOk" label="Antrag Ok?" type="boolean" />
+          <camunda:formField id="antragOk" label="Antrag OK?" type="boolean" />
           <camunda:formField id="nachname" label="Nachname" type="string">
             <camunda:validation>
               <camunda:constraint name="required" />
@@ -103,7 +103,7 @@
       <bpmn:outgoing>Flow_09xvczo</bpmn:outgoing>
       <bpmn:outgoing>Flow_05ibvnb</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="KundendatenAbrufen" name="Kundendaten abrufen" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.KundendatenAbrufen">
+    <bpmn:serviceTask id="ServiceTask_KundendatenAbrufen" name="Kundendaten abrufen" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.KundendatenAbrufen">
       <bpmn:incoming>Flow_09xvczo</bpmn:incoming>
       <bpmn:outgoing>Flow_0jeoh4c</bpmn:outgoing>
       <bpmn:property id="Property_0ahhk8v" name="__targetRef_placeholder" />
@@ -112,12 +112,12 @@
         <bpmn:targetRef>Property_0ahhk8v</bpmn:targetRef>
       </bpmn:dataInputAssociation>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_0c1hjli" sourceRef="KundendatenAbspeichern" targetRef="Gateway_1j5a2yh" />
-    <bpmn:sequenceFlow id="Flow_05ibvnb" name="Antrag fehlerhaft" sourceRef="Gateway_0oe2l1y" targetRef="KundenInformieren">
+    <bpmn:sequenceFlow id="Flow_0c1hjli" sourceRef="ServiceTask_KundendatenAbspeichern" targetRef="Gateway_1j5a2yh" />
+    <bpmn:sequenceFlow id="Flow_05ibvnb" name="Antrag fehlerhaft" sourceRef="Gateway_0oe2l1y" targetRef="ServiceTask_KundenInformieren">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${antragOk == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0jz9f24" sourceRef="KundenInformieren" targetRef="Gateway_0aef2xb" />
-    <bpmn:serviceTask id="KundenInformieren" name="Kunden informieren" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.KundeInformieren">
+    <bpmn:sequenceFlow id="Flow_0jz9f24" sourceRef="ServiceTask_KundenInformieren" targetRef="Gateway_0aef2xb" />
+    <bpmn:serviceTask id="ServiceTask_KundenInformieren" name="Kunden informieren" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.KundenInformieren">
       <bpmn:incoming>Flow_05ibvnb</bpmn:incoming>
       <bpmn:outgoing>Flow_0jz9f24</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -126,18 +126,18 @@
       <bpmn:outgoing>Flow_06ha5s5</bpmn:outgoing>
       <bpmn:outgoing>Flow_1fqianh</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:boundaryEvent id="Event_1pl86np" attachedToRef="KundendatenAbrufen">
+    <bpmn:boundaryEvent id="Event_1pl86np" attachedToRef="ServiceTask_KundendatenAbrufen">
       <bpmn:outgoing>Flow_0ffern7</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_0kggp0u" />
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_0ffern7" sourceRef="Event_1pl86np" targetRef="Gateway_0cwyuz3" />
-    <bpmn:sequenceFlow id="Flow_1782vju" sourceRef="Gateway_0cwyuz3" targetRef="Risikobewertung" />
+    <bpmn:sequenceFlow id="Flow_1782vju" sourceRef="Gateway_0cwyuz3" targetRef="UserTask_Risikobewertung" />
     <bpmn:exclusiveGateway id="Gateway_0cwyuz3">
       <bpmn:incoming>Flow_1fqianh</bpmn:incoming>
       <bpmn:incoming>Flow_0ffern7</bpmn:incoming>
       <bpmn:outgoing>Flow_1782vju</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Risikobewertung" name="initiale Risiko-bewertung">
+    <bpmn:userTask id="UserTask_Risikobewertung" name="initiale Risiko-bewertung">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="risikobewertung" label="Risikobewertung" type="long" />
@@ -146,7 +146,7 @@
       <bpmn:incoming>Flow_1782vju</bpmn:incoming>
       <bpmn:outgoing>Flow_15aa8gw</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="KundendatenAbspeichern" name="Kundendaten abspeichern" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.KundendatenAbspeichern">
+    <bpmn:serviceTask id="ServiceTask_KundendatenAbspeichern" name="Kundendaten abspeichern" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.KundendatenAbspeichern">
       <bpmn:incoming>Flow_15aa8gw</bpmn:incoming>
       <bpmn:outgoing>Flow_0c1hjli</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_1yglxcv">
@@ -155,23 +155,12 @@
     </bpmn:serviceTask>
     <bpmn:dataStoreReference id="DataStoreReference_09n00lp" name="Kundendaten" />
     <bpmn:dataStoreReference id="DataStoreReference_01h4drn" name="Kundendaten" />
-    <bpmn:boundaryEvent id="Event_1g9n15u" attachedToRef="KundendatenAbspeichern">
+    <bpmn:boundaryEvent id="Event_1g9n15u" attachedToRef="ServiceTask_KundendatenAbspeichern">
       <bpmn:outgoing>Flow_0q9dlh1</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_0caay8u" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_0q9dlh1" sourceRef="Event_1g9n15u" targetRef="Activity_0y0rzd9" />
-    <bpmn:serviceTask id="Activity_0haiax7" name="E-mail verschicken" camunda:asyncBefore="true">
-      <bpmn:extensionElements>
-        <camunda:connector>
-          <camunda:inputOutput>
-            <camunda:inputParameter name="from">versicherung@vs.de</camunda:inputParameter>
-            <camunda:inputParameter name="text">${text}</camunda:inputParameter>
-            <camunda:inputParameter name="to">kunde@gmail.de</camunda:inputParameter>
-            <camunda:inputParameter name="subject">Benachrichtigung</camunda:inputParameter>
-          </camunda:inputOutput>
-          <camunda:connectorId>mail-send</camunda:connectorId>
-        </camunda:connector>
-      </bpmn:extensionElements>
+    <bpmn:sequenceFlow id="Flow_0q9dlh1" sourceRef="Event_1g9n15u" targetRef="ServiceTask_LokalSpeichern" />
+    <bpmn:serviceTask id="ServiceTask_EmailVersenden" name="E-mail versenden" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.EmailVersenden">
       <bpmn:incoming>Flow_1wx4jk9</bpmn:incoming>
       <bpmn:outgoing>Flow_0vwzoae</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -181,14 +170,11 @@
       <bpmn:incoming>Flow_0jz9f24</bpmn:incoming>
       <bpmn:outgoing>Flow_1wx4jk9</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="AntragAblehnen" name="Antrag ablehnen" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.AntragAblehnen">
-      <bpmn:extensionElements>
-        <camunda:failedJobRetryTimeCycle>PT1M</camunda:failedJobRetryTimeCycle>
-      </bpmn:extensionElements>
+    <bpmn:serviceTask id="ServiceTask_AntragAblehnen" name="Antrag ablehnen" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.AntragAblehnen">
       <bpmn:incoming>Flow_095gkrb</bpmn:incoming>
       <bpmn:outgoing>Flow_1dqx7og</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="Activity_0830f1b" name="Angebot erstellen">
+    <bpmn:userTask id="UserTask_AngebotErstellen" name="Angebot erstellen">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="text" label="Text" type="string" />
@@ -208,25 +194,25 @@
       <bpmn:incoming>Flow_11nfoun</bpmn:incoming>
       <bpmn:outgoing>Flow_1rsg26w</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Activity_0y0rzd9" name="Lokal speichern" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.LokalSpeichern">
+    <bpmn:serviceTask id="ServiceTask_LokalSpeichern" name="Lokal speichern" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.LokalSpeichern">
       <bpmn:incoming>Flow_0q9dlh1</bpmn:incoming>
       <bpmn:outgoing>Flow_11nfoun</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_11nfoun" sourceRef="Activity_0y0rzd9" targetRef="Gateway_1j5a2yh" />
-    <bpmn:boundaryEvent id="Event_04v3co8" attachedToRef="Activity_0haiax7">
+    <bpmn:sequenceFlow id="Flow_11nfoun" sourceRef="ServiceTask_LokalSpeichern" targetRef="Gateway_1j5a2yh" />
+    <bpmn:boundaryEvent id="Event_04v3co8" attachedToRef="ServiceTask_EmailVersenden">
       <bpmn:outgoing>Flow_1750gv6</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_1u1fnrk" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_1750gv6" sourceRef="Event_04v3co8" targetRef="Activity_0emdgpx" />
-    <bpmn:sequenceFlow id="Flow_0ayqyvx" sourceRef="Activity_0emdgpx" targetRef="Event_0objj7p" />
+    <bpmn:sequenceFlow id="Flow_1750gv6" sourceRef="Event_04v3co8" targetRef="UserTask_EmailVersenden" />
+    <bpmn:sequenceFlow id="Flow_0ayqyvx" sourceRef="UserTask_EmailVersenden" targetRef="Event_0objj7p" />
     <bpmn:endEvent id="Event_0objj7p">
       <bpmn:incoming>Flow_0ayqyvx</bpmn:incoming>
       <bpmn:terminateEventDefinition id="TerminateEventDefinition_06ls3ug" />
     </bpmn:endEvent>
-    <bpmn:userTask id="Activity_0emdgpx" name="E-mail verschicken">
+    <bpmn:userTask id="UserTask_EmailVersenden" name="E-mail versenden">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="E-mail verschickt?" type="boolean" />
+          <camunda:formField id="EmailVersendet" label="E-Mail versendet?" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1750gv6</bpmn:incoming>
@@ -236,7 +222,7 @@
       <bpmn:incoming>Flow_0vwzoae</bpmn:incoming>
       <bpmn:terminateEventDefinition id="TerminateEventDefinition_0dudrg3" />
     </bpmn:endEvent>
-    <bpmn:boundaryEvent id="Event_11x29xt" name="Dauer &#62; 1 day" cancelActivity="false" attachedToRef="Risikobewertung">
+    <bpmn:boundaryEvent id="Event_11x29xt" name="Dauer &#62; 1 day" cancelActivity="false" attachedToRef="UserTask_Risikobewertung">
       <bpmn:outgoing>Flow_15kjz6y</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1a0npwf">
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
@@ -245,7 +231,7 @@
     <bpmn:endEvent id="Event_0rurf1j">
       <bpmn:incoming>Flow_1nf6jir</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="SachbearbeiterErinnern" name="Sachbearbeiter erinnern">
+    <bpmn:userTask id="UserTask_SachbearbeiterErinnern" name="Sachbearbeiter erinnern">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="erinnert" type="boolean" />
@@ -254,10 +240,11 @@
       <bpmn:incoming>Flow_15kjz6y</bpmn:incoming>
       <bpmn:outgoing>Flow_1nf6jir</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_1nf6jir" sourceRef="SachbearbeiterErinnern" targetRef="Event_0rurf1j" />
-    <bpmn:sequenceFlow id="Flow_15kjz6y" sourceRef="Event_11x29xt" targetRef="SachbearbeiterErinnern" />
+    <bpmn:sequenceFlow id="Flow_1nf6jir" sourceRef="UserTask_SachbearbeiterErinnern" targetRef="Event_0rurf1j" />
+    <bpmn:sequenceFlow id="Flow_15kjz6y" sourceRef="Event_11x29xt" targetRef="UserTask_SachbearbeiterErinnern" />
   </bpmn:process>
   <bpmn:message id="Message_0l584ok" name="erinnern" />
+  <bpmn:error id="Error_0zq7f2d" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1o1ydy4">
       <bpmndi:BPMNShape id="Participant_03f49nv_di" bpmnElement="Participant_03f49nv" isHorizontal="true">
@@ -404,16 +391,16 @@
           <dc:Bounds x="194" y="275" width="32" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0poksjy_di" bpmnElement="AntragUeberpruefen">
+      <bpmndi:BPMNShape id="Activity_0poksjy_di" bpmnElement="UserTask_AntragUeberpruefen">
         <dc:Bounds x="280" y="210" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0klr479_di" bpmnElement="Gateway_0oe2l1y" isMarkerVisible="true">
         <dc:Bounds x="435" y="225" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0j7yo5f_di" bpmnElement="KundendatenAbrufen">
+      <bpmndi:BPMNShape id="Activity_0j7yo5f_di" bpmnElement="ServiceTask_KundendatenAbrufen">
         <dc:Bounds x="580" y="210" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0z35ns1_di" bpmnElement="KundenInformieren">
+      <bpmndi:BPMNShape id="Activity_0z35ns1_di" bpmnElement="ServiceTask_KundenInformieren">
         <dc:Bounds x="960" y="90" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_093rdag_di" bpmnElement="Gateway_093rdag" isMarkerVisible="true">
@@ -422,10 +409,10 @@
       <bpmndi:BPMNShape id="Gateway_0cwyuz3_di" bpmnElement="Gateway_0cwyuz3" isMarkerVisible="true">
         <dc:Bounds x="795" y="325" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_16llcmd_di" bpmnElement="Risikobewertung">
+      <bpmndi:BPMNShape id="Activity_16llcmd_di" bpmnElement="UserTask_Risikobewertung">
         <dc:Bounds x="890" y="310" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1hyy171_di" bpmnElement="KundendatenAbspeichern">
+      <bpmndi:BPMNShape id="Activity_1hyy171_di" bpmnElement="ServiceTask_KundendatenAbspeichern">
         <dc:Bounds x="1090" y="310" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataStoreReference_09n00lp_di" bpmnElement="DataStoreReference_09n00lp">
@@ -440,16 +427,16 @@
           <dc:Bounds x="1017" y="485" width="66" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_17frrq2_di" bpmnElement="Activity_0haiax7">
+      <bpmndi:BPMNShape id="Activity_17frrq2_di" bpmnElement="ServiceTask_EmailVersenden">
         <dc:Bounds x="1760" y="210" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0aef2xb_di" bpmnElement="Gateway_0aef2xb" isMarkerVisible="true">
         <dc:Bounds x="1675" y="225" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_00iwo1m_di" bpmnElement="AntragAblehnen">
+      <bpmndi:BPMNShape id="Activity_00iwo1m_di" bpmnElement="ServiceTask_AntragAblehnen">
         <dc:Bounds x="1530" y="210" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1126plm_di" bpmnElement="Activity_0830f1b">
+      <bpmndi:BPMNShape id="Activity_1126plm_di" bpmnElement="UserTask_AngebotErstellen">
         <dc:Bounds x="1530" y="330" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0wm2m0v_di" bpmnElement="Gateway_0wm2m0v" isMarkerVisible="true">
@@ -461,13 +448,13 @@
       <bpmndi:BPMNShape id="Gateway_1j5a2yh_di" bpmnElement="Gateway_1j5a2yh" isMarkerVisible="true">
         <dc:Bounds x="1285" y="225" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1vx17kk_di" bpmnElement="Activity_0y0rzd9">
+      <bpmndi:BPMNShape id="Activity_1vx17kk_di" bpmnElement="ServiceTask_LokalSpeichern">
         <dc:Bounds x="1260" y="390" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1sj8l3k_di" bpmnElement="Event_0objj7p">
         <dc:Bounds x="2052" y="352" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0y1p2wm_di" bpmnElement="Activity_0emdgpx">
+      <bpmndi:BPMNShape id="Activity_0y1p2wm_di" bpmnElement="UserTask_EmailVersenden">
         <dc:Bounds x="1900" y="330" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_04dltmy_di" bpmnElement="Event_1shxz53">
@@ -476,7 +463,7 @@
       <bpmndi:BPMNShape id="Event_0rurf1j_di" bpmnElement="Event_0rurf1j">
         <dc:Bounds x="1072" y="562" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0b144w8_di" bpmnElement="SachbearbeiterErinnern">
+      <bpmndi:BPMNShape id="Activity_0b144w8_di" bpmnElement="UserTask_SachbearbeiterErinnern">
         <dc:Bounds x="940" y="540" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0cidkwh_di" bpmnElement="Event_11x29xt">
