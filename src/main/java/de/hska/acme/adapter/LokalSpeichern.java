@@ -8,7 +8,10 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +33,10 @@ public class LokalSpeichern implements JavaDelegate {
         ObjectMapper mapper = new ObjectMapper();
         File log = new File(fileName);
         List<Customer> customers = new ArrayList<>();
-        if(log.exists()){
-            customers.addAll(mapper.readValue(Paths.get(fileName).toFile(), new TypeReference<List<Customer>>(){}));
+        if (log.exists()) {
+            customers.addAll(
+                    mapper.readValue(Paths.get(fileName).toFile(), new TypeReference<List<Customer>>() {
+                    }));
             log.delete();
         }
 
