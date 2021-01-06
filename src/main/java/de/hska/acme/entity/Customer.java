@@ -1,7 +1,6 @@
 package de.hska.acme.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
 import java.text.ParseException;
@@ -15,17 +14,14 @@ import java.util.Locale;
 
 public class Customer {
 
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     private long id;
     private String prename;
     private String surname;
-
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate birthDate;
-
+    
     private long riskScore;
     private List<String> contracts;
-
 
     public long getId() {
         return id;
@@ -55,13 +51,18 @@ public class Customer {
         return birthDate;
     }
 
-    public String getBirthDateAsString(){
-        var pattern = "yyyy/MM/dd";
-        return birthDate.format(DateTimeFormatter.ofPattern(pattern));
-    }
-
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    @JsonProperty("birthDate")
+    public String getBirthDateAsString() {
+        return birthDate.format(DATE_TIME_FORMATTER);
+    }
+
+    @JsonProperty("birthDate")
+    public void setBirthDateFromString(String birthDate) {
+        this.birthDate = LocalDate.parse(birthDate, DATE_TIME_FORMATTER);
     }
 
     public long getRiskScore() {
