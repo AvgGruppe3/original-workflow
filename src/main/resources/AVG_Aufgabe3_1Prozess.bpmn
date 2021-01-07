@@ -66,31 +66,23 @@
           <camunda:formField id="antragOk" label="Antrag OK?" type="boolean" />
           <camunda:formField id="nachname" label="Nachname" type="string">
             <camunda:validation>
-              <camunda:constraint name="required" />
               <camunda:constraint name="maxlength" config="25" />
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="vorname" label="Vorname" type="string">
             <camunda:validation>
-              <camunda:constraint name="required" />
               <camunda:constraint name="maxlength" config="25" />
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="geburtsdatum" label="Geburtsdatum" type="date">
             <camunda:validation>
-              <camunda:constraint name="required" />
               <camunda:constraint name="validator" config="de.hska.acme.GeburtsdatumValidator" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="lebensversicherungsprodukt" label="Lebensversicherungsprodukt" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-          </camunda:formField>
+          <camunda:formField id="lebensversicherungsprodukt" label="Lebensversicherungsprodukt" type="string" />
           <camunda:formField id="versicherungssumme" label="Versicherungssumme" type="long">
             <camunda:validation>
-              <camunda:constraint name="required" />
-              <camunda:constraint name="min" config="0" />
+              <camunda:constraint name="min" config="1" />
             </camunda:validation>
           </camunda:formField>
         </camunda:formData>
