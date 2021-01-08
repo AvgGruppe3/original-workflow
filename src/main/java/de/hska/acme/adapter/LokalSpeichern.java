@@ -26,7 +26,7 @@ public class LokalSpeichern implements JavaDelegate {
     public void execute(DelegateExecution execution) throws Exception {
         logger.info("LokalSpeichern entry");
 
-        Customer newCustomer = new Customer().createFromProcessVariables(execution);
+        Customer newCustomer = new Customer().createFromProcessVariablesWithRiskScore(execution);
         fileService.writeToFile(newCustomer);
 
         logger.info("LokalSpeichern exit");

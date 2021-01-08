@@ -1,5 +1,6 @@
 package de.hska.acme.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
@@ -14,12 +15,13 @@ import java.util.Locale;
 
 public class Customer {
 
+    @JsonIgnore
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
     private long id;
     private String prename;
     private String surname;
     private LocalDate birthDate;
-    
     private long riskScore;
     private List<String> contracts;
 
@@ -83,7 +85,8 @@ public class Customer {
 
     public Customer createFromProcessVariablesWithRiskScore(DelegateExecution execution) throws ParseException {
         createFromProcessVariables(execution);
-        setRiskScore((Long) execution.getVariable("risikobewertung"));
+        long risikobewertung = Long.parseLong(String.valueOf(execution.getVariable("risikobewertung")));
+        setRiskScore(risikobewertung);
         return this;
     }
 
@@ -103,4 +106,15 @@ public class Customer {
 
     }
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", prename='" + prename + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", riskScore=" + riskScore +
+                ", contracts=" + contracts +
+                '}';
+    }
 }
