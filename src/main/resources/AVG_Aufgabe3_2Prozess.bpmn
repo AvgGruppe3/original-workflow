@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0tunuzm" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <bpmn:collaboration id="Collaboration_1o1ydy4">
+    <bpmn:participant id="Participant_03f49nv" name="Abteilung Auftragsbearbeitung" processRef="Process_0oha7u6" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_0oha7u6" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_1qne755">
+      <bpmn:lane id="Lane_1bp0r3h">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_AntragUeberpruefen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0oe2l1y</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_KundendatenAbrufen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_KundenInformieren</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_093rdag</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0cwyuz3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_Risikobewertung</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_KundendatenAbspeichern</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_EmailVersenden</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0aef2xb</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_AntragAblehnen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0wm2m0v</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1j5a2yh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ServiceTask_LokalSpeichern</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0objj7p</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_EmailVersenden</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1shxz53</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1pl86np</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1g9n15u</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_04v3co8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_11x29xt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_AngebotErstellen</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_006az6s">
+        <bpmn:flowNodeRef>Event_0rurf1j</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_SachbearbeiterErinnern</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:sequenceFlow id="Flow_10ppctb" sourceRef="UserTask_AntragUeberpruefen" targetRef="Gateway_0oe2l1y" />
+    <bpmn:sequenceFlow id="Flow_09xvczo" name="Antrag korrekt" sourceRef="Gateway_0oe2l1y" targetRef="ServiceTask_KundendatenAbrufen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${antragOk == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0jeoh4c" sourceRef="ServiceTask_KundendatenAbrufen" targetRef="Gateway_093rdag" />
+    <bpmn:sequenceFlow id="Flow_095gkrb" name="hoch" sourceRef="Gateway_0wm2m0v" targetRef="ServiceTask_AntragAblehnen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${risikobewertung &gt; 8000}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0mk3s14" name="niedrig/mittel" sourceRef="Gateway_0wm2m0v" targetRef="UserTask_AngebotErstellen" />
+    <bpmn:sequenceFlow id="Flow_1tjt2xm" sourceRef="UserTask_AngebotErstellen" targetRef="Gateway_0aef2xb" />
+    <bpmn:sequenceFlow id="Flow_0vwzoae" sourceRef="ServiceTask_EmailVersenden" targetRef="Event_1shxz53" />
+    <bpmn:sequenceFlow id="Flow_1p0j0wy" sourceRef="StartEvent_1" targetRef="UserTask_AntragUeberpruefen" />
+    <bpmn:sequenceFlow id="Flow_1dqx7og" sourceRef="ServiceTask_AntragAblehnen" targetRef="Gateway_0aef2xb" />
+    <bpmn:sequenceFlow id="Flow_1wx4jk9" sourceRef="Gateway_0aef2xb" targetRef="ServiceTask_EmailVersenden" />
+    <bpmn:sequenceFlow id="Flow_06ha5s5" name="Bestandskunde" sourceRef="Gateway_093rdag" targetRef="Gateway_1j5a2yh">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${nk == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1fqianh" name="Neukunde" sourceRef="Gateway_093rdag" targetRef="Gateway_0cwyuz3">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${nk == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1rsg26w" sourceRef="Gateway_1j5a2yh" targetRef="Gateway_0wm2m0v" />
+    <bpmn:sequenceFlow id="Flow_15aa8gw" sourceRef="UserTask_Risikobewertung" targetRef="ServiceTask_KundendatenAbspeichern" />
+    <bpmn:startEvent id="StartEvent_1" name="Antrag">
+      <bpmn:outgoing>Flow_1p0j0wy</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="UserTask_AntragUeberpruefen" name="Antrag überprüfen">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="antragOk" label="Antrag OK?" type="boolean" />
+          <camunda:formField id="nachname" label="Nachname" type="string">
+            <camunda:validation>
+              <camunda:constraint name="maxlength" config="25" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="vorname" label="Vorname" type="string">
+            <camunda:validation>
+              <camunda:constraint name="maxlength" config="25" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="geburtsdatum" label="Geburtsdatum" type="date">
+            <camunda:validation>
+              <camunda:constraint name="validator" config="de.hska.acme.GeburtsdatumValidator" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="lebensversicherungsprodukt" label="Lebensversicherungsprodukt" type="string" />
+          <camunda:formField id="versicherungssumme" label="Versicherungssumme" type="long">
+            <camunda:validation>
+              <camunda:constraint name="min" config="1" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1p0j0wy</bpmn:incoming>
+      <bpmn:outgoing>Flow_10ppctb</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0oe2l1y">
+      <bpmn:incoming>Flow_10ppctb</bpmn:incoming>
+      <bpmn:outgoing>Flow_09xvczo</bpmn:outgoing>
+      <bpmn:outgoing>Flow_05ibvnb</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="ServiceTask_KundendatenAbrufen" name="Kundendaten abrufen" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.KundendatenAbrufen">
+      <bpmn:incoming>Flow_09xvczo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jeoh4c</bpmn:outgoing>
+      <bpmn:property id="Property_0ahhk8v" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1o411gi">
+        <bpmn:sourceRef>DataStoreReference_09n00lp</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0ahhk8v</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0c1hjli" sourceRef="ServiceTask_KundendatenAbspeichern" targetRef="Gateway_1j5a2yh" />
+    <bpmn:sequenceFlow id="Flow_05ibvnb" name="Antrag fehlerhaft" sourceRef="Gateway_0oe2l1y" targetRef="ServiceTask_KundenInformieren">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${antragOk == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0jz9f24" sourceRef="ServiceTask_KundenInformieren" targetRef="Gateway_0aef2xb" />
+    <bpmn:serviceTask id="ServiceTask_KundenInformieren" name="Kunden informieren" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.KundenInformieren">
+      <bpmn:incoming>Flow_05ibvnb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jz9f24</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_093rdag">
+      <bpmn:incoming>Flow_0jeoh4c</bpmn:incoming>
+      <bpmn:outgoing>Flow_06ha5s5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1fqianh</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:boundaryEvent id="Event_1pl86np" attachedToRef="ServiceTask_KundendatenAbrufen">
+      <bpmn:outgoing>Flow_0ffern7</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0kggp0u" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0ffern7" sourceRef="Event_1pl86np" targetRef="Gateway_0cwyuz3" />
+    <bpmn:sequenceFlow id="Flow_1782vju" sourceRef="Gateway_0cwyuz3" targetRef="UserTask_Risikobewertung" />
+    <bpmn:exclusiveGateway id="Gateway_0cwyuz3">
+      <bpmn:incoming>Flow_1fqianh</bpmn:incoming>
+      <bpmn:incoming>Flow_0ffern7</bpmn:incoming>
+      <bpmn:outgoing>Flow_1782vju</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="UserTask_Risikobewertung" name="initiale Risiko-bewertung">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="risikobewertung" label="Risikobewertung" type="long" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1782vju</bpmn:incoming>
+      <bpmn:outgoing>Flow_15aa8gw</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="ServiceTask_KundendatenAbspeichern" name="Kundendaten abspeichern" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.KundendatenAbspeichern">
+      <bpmn:incoming>Flow_15aa8gw</bpmn:incoming>
+      <bpmn:outgoing>Flow_0c1hjli</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1yglxcv">
+        <bpmn:targetRef>DataStoreReference_01h4drn</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:dataStoreReference id="DataStoreReference_09n00lp" name="Kundendaten" />
+    <bpmn:dataStoreReference id="DataStoreReference_01h4drn" name="Kundendaten" />
+    <bpmn:boundaryEvent id="Event_1g9n15u" attachedToRef="ServiceTask_KundendatenAbspeichern">
+      <bpmn:outgoing>Flow_0q9dlh1</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0caay8u" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0q9dlh1" sourceRef="Event_1g9n15u" targetRef="ServiceTask_LokalSpeichern" />
+    <bpmn:serviceTask id="ServiceTask_EmailVersenden" name="E-mail versenden" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.EmailVersenden">
+      <bpmn:incoming>Flow_1wx4jk9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vwzoae</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_0aef2xb">
+      <bpmn:incoming>Flow_1tjt2xm</bpmn:incoming>
+      <bpmn:incoming>Flow_1dqx7og</bpmn:incoming>
+      <bpmn:incoming>Flow_0jz9f24</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wx4jk9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="ServiceTask_AntragAblehnen" name="Antrag ablehnen" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.AntragAblehnen">
+      <bpmn:incoming>Flow_095gkrb</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dqx7og</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_0wm2m0v" name="Risiko" default="Flow_0mk3s14">
+      <bpmn:incoming>Flow_1rsg26w</bpmn:incoming>
+      <bpmn:outgoing>Flow_095gkrb</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0mk3s14</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_1j5a2yh">
+      <bpmn:incoming>Flow_06ha5s5</bpmn:incoming>
+      <bpmn:incoming>Flow_0c1hjli</bpmn:incoming>
+      <bpmn:incoming>Flow_11nfoun</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rsg26w</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="ServiceTask_LokalSpeichern" name="Lokal speichern" camunda:asyncBefore="true" camunda:class="de.hska.acme.adapter.LokalSpeichern">
+      <bpmn:incoming>Flow_0q9dlh1</bpmn:incoming>
+      <bpmn:outgoing>Flow_11nfoun</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_11nfoun" sourceRef="ServiceTask_LokalSpeichern" targetRef="Gateway_1j5a2yh" />
+    <bpmn:boundaryEvent id="Event_04v3co8" attachedToRef="ServiceTask_EmailVersenden">
+      <bpmn:outgoing>Flow_1750gv6</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1u1fnrk" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_1750gv6" sourceRef="Event_04v3co8" targetRef="UserTask_EmailVersenden" />
+    <bpmn:sequenceFlow id="Flow_0ayqyvx" sourceRef="UserTask_EmailVersenden" targetRef="Event_0objj7p" />
+    <bpmn:endEvent id="Event_0objj7p">
+      <bpmn:incoming>Flow_0ayqyvx</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_06ls3ug" />
+    </bpmn:endEvent>
+    <bpmn:userTask id="UserTask_EmailVersenden" name="E-mail versenden">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="EmailVersendet" label="E-Mail versendet?" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1750gv6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ayqyvx</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_1shxz53">
+      <bpmn:incoming>Flow_0vwzoae</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_0dudrg3" />
+    </bpmn:endEvent>
+    <bpmn:boundaryEvent id="Event_11x29xt" name="Dauer &#62; 1 day" cancelActivity="false" attachedToRef="UserTask_Risikobewertung">
+      <bpmn:outgoing>Flow_15kjz6y</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1a0npwf">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:endEvent id="Event_0rurf1j">
+      <bpmn:incoming>Flow_1nf6jir</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="UserTask_SachbearbeiterErinnern" name="Sachbearbeiter erinnern">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="erinnert" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_15kjz6y</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nf6jir</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1nf6jir" sourceRef="UserTask_SachbearbeiterErinnern" targetRef="Event_0rurf1j" />
+    <bpmn:sequenceFlow id="Flow_15kjz6y" sourceRef="Event_11x29xt" targetRef="UserTask_SachbearbeiterErinnern" />
+    <bpmn:businessRuleTask id="UserTask_AngebotErstellen" name="Angebot erstellen" camunda:resultVariable="Angebot" camunda:decisionRef="Decision_Angebot" camunda:mapDecisionResult="singleEntry">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="Risiko" />
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0mk3s14</bpmn:incoming>
+      <bpmn:outgoing>Flow_1tjt2xm</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+  </bpmn:process>
+  <bpmn:message id="Message_0l584ok" name="erinnern" />
+  <bpmn:error id="Error_0zq7f2d" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1o1ydy4">
+      <bpmndi:BPMNShape id="Participant_03f49nv_di" bpmnElement="Participant_03f49nv" isHorizontal="true">
+        <dc:Bounds x="112" y="80" width="2048" height="640" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_006az6s_di" bpmnElement="Lane_006az6s" isHorizontal="true">
+        <dc:Bounds x="142" y="500" width="2018" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1bp0r3h_di" bpmnElement="Lane_1bp0r3h" isHorizontal="true">
+        <dc:Bounds x="142" y="80" width="2018" height="420" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_15kjz6y_di" bpmnElement="Flow_15kjz6y">
+        <di:waypoint x="890" y="408" />
+        <di:waypoint x="890" y="580" />
+        <di:waypoint x="940" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nf6jir_di" bpmnElement="Flow_1nf6jir">
+        <di:waypoint x="1040" y="580" />
+        <di:waypoint x="1072" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ayqyvx_di" bpmnElement="Flow_0ayqyvx">
+        <di:waypoint x="2000" y="370" />
+        <di:waypoint x="2052" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1750gv6_di" bpmnElement="Flow_1750gv6">
+        <di:waypoint x="1830" y="308" />
+        <di:waypoint x="1830" y="370" />
+        <di:waypoint x="1900" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11nfoun_di" bpmnElement="Flow_11nfoun">
+        <di:waypoint x="1310" y="390" />
+        <di:waypoint x="1310" y="275" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q9dlh1_di" bpmnElement="Flow_0q9dlh1">
+        <di:waypoint x="1170" y="408" />
+        <di:waypoint x="1170" y="430" />
+        <di:waypoint x="1260" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1782vju_di" bpmnElement="Flow_1782vju">
+        <di:waypoint x="845" y="350" />
+        <di:waypoint x="890" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ffern7_di" bpmnElement="Flow_0ffern7">
+        <di:waypoint x="660" y="308" />
+        <di:waypoint x="660" y="350" />
+        <di:waypoint x="795" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jz9f24_di" bpmnElement="Flow_0jz9f24">
+        <di:waypoint x="1060" y="130" />
+        <di:waypoint x="1700" y="130" />
+        <di:waypoint x="1700" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05ibvnb_di" bpmnElement="Flow_05ibvnb">
+        <di:waypoint x="460" y="225" />
+        <di:waypoint x="460" y="130" />
+        <di:waypoint x="960" y="130" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="469" y="183" width="82" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0c1hjli_di" bpmnElement="Flow_0c1hjli">
+        <di:waypoint x="1140" y="310" />
+        <di:waypoint x="1140" y="250" />
+        <di:waypoint x="1285" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15aa8gw_di" bpmnElement="Flow_15aa8gw">
+        <di:waypoint x="990" y="350" />
+        <di:waypoint x="1090" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rsg26w_di" bpmnElement="Flow_1rsg26w">
+        <di:waypoint x="1335" y="250" />
+        <di:waypoint x="1395" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fqianh_di" bpmnElement="Flow_1fqianh">
+        <di:waypoint x="820" y="275" />
+        <di:waypoint x="820" y="325" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="824" y="286" width="51" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06ha5s5_di" bpmnElement="Flow_06ha5s5">
+        <di:waypoint x="820" y="225" />
+        <di:waypoint x="820" y="200" />
+        <di:waypoint x="1310" y="200" />
+        <di:waypoint x="1310" y="225" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="203" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wx4jk9_di" bpmnElement="Flow_1wx4jk9">
+        <di:waypoint x="1725" y="250" />
+        <di:waypoint x="1760" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dqx7og_di" bpmnElement="Flow_1dqx7og">
+        <di:waypoint x="1630" y="250" />
+        <di:waypoint x="1675" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1p0j0wy_di" bpmnElement="Flow_1p0j0wy">
+        <di:waypoint x="228" y="250" />
+        <di:waypoint x="280" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vwzoae_di" bpmnElement="Flow_0vwzoae">
+        <di:waypoint x="1860" y="250" />
+        <di:waypoint x="2052" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1tjt2xm_di" bpmnElement="Flow_1tjt2xm">
+        <di:waypoint x="1630" y="370" />
+        <di:waypoint x="1700" y="370" />
+        <di:waypoint x="1700" y="275" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mk3s14_di" bpmnElement="Flow_0mk3s14">
+        <di:waypoint x="1420" y="275" />
+        <di:waypoint x="1420" y="370" />
+        <di:waypoint x="1530" y="370" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1428" y="313" width="63" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_095gkrb_di" bpmnElement="Flow_095gkrb">
+        <di:waypoint x="1445" y="250" />
+        <di:waypoint x="1530" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1499" y="233" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jeoh4c_di" bpmnElement="Flow_0jeoh4c">
+        <di:waypoint x="680" y="250" />
+        <di:waypoint x="795" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09xvczo_di" bpmnElement="Flow_09xvczo">
+        <di:waypoint x="485" y="250" />
+        <di:waypoint x="580" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="488" y="253" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10ppctb_di" bpmnElement="Flow_10ppctb">
+        <di:waypoint x="380" y="250" />
+        <di:waypoint x="435" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_04dk1p7_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="192" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="194" y="275" width="32" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0poksjy_di" bpmnElement="UserTask_AntragUeberpruefen">
+        <dc:Bounds x="280" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0klr479_di" bpmnElement="Gateway_0oe2l1y" isMarkerVisible="true">
+        <dc:Bounds x="435" y="225" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0j7yo5f_di" bpmnElement="ServiceTask_KundendatenAbrufen">
+        <dc:Bounds x="580" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0z35ns1_di" bpmnElement="ServiceTask_KundenInformieren">
+        <dc:Bounds x="960" y="90" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_093rdag_di" bpmnElement="Gateway_093rdag" isMarkerVisible="true">
+        <dc:Bounds x="795" y="225" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0cwyuz3_di" bpmnElement="Gateway_0cwyuz3" isMarkerVisible="true">
+        <dc:Bounds x="795" y="325" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16llcmd_di" bpmnElement="UserTask_Risikobewertung">
+        <dc:Bounds x="890" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hyy171_di" bpmnElement="ServiceTask_KundendatenAbspeichern">
+        <dc:Bounds x="1090" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_09n00lp_di" bpmnElement="DataStoreReference_09n00lp">
+        <dc:Bounds x="555" y="355" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="547" y="415" width="66" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_01h4drn_di" bpmnElement="DataStoreReference_01h4drn">
+        <dc:Bounds x="1025" y="425" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1017" y="485" width="66" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17frrq2_di" bpmnElement="ServiceTask_EmailVersenden">
+        <dc:Bounds x="1760" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0aef2xb_di" bpmnElement="Gateway_0aef2xb" isMarkerVisible="true">
+        <dc:Bounds x="1675" y="225" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00iwo1m_di" bpmnElement="ServiceTask_AntragAblehnen">
+        <dc:Bounds x="1530" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0wm2m0v_di" bpmnElement="Gateway_0wm2m0v" isMarkerVisible="true">
+        <dc:Bounds x="1395" y="225" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1405" y="201" width="30" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1j5a2yh_di" bpmnElement="Gateway_1j5a2yh" isMarkerVisible="true">
+        <dc:Bounds x="1285" y="225" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vx17kk_di" bpmnElement="ServiceTask_LokalSpeichern">
+        <dc:Bounds x="1260" y="390" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1sj8l3k_di" bpmnElement="Event_0objj7p">
+        <dc:Bounds x="2052" y="352" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0y1p2wm_di" bpmnElement="UserTask_EmailVersenden">
+        <dc:Bounds x="1900" y="330" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04dltmy_di" bpmnElement="Event_1shxz53">
+        <dc:Bounds x="2052" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0rurf1j_di" bpmnElement="Event_0rurf1j">
+        <dc:Bounds x="1072" y="562" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0b144w8_di" bpmnElement="UserTask_SachbearbeiterErinnern">
+        <dc:Bounds x="940" y="540" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0e5ffpu_di" bpmnElement="UserTask_AngebotErstellen">
+        <dc:Bounds x="1530" y="330" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0cidkwh_di" bpmnElement="Event_11x29xt">
+        <dc:Bounds x="872" y="372" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="895" y="415" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1cf5yct_di" bpmnElement="Event_04v3co8">
+        <dc:Bounds x="1812" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0soz3aw_di" bpmnElement="Event_1g9n15u">
+        <dc:Bounds x="1152" y="372" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0dt6zwj_di" bpmnElement="Event_1pl86np">
+        <dc:Bounds x="642" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1o411gi_di" bpmnElement="DataInputAssociation_1o411gi">
+        <di:waypoint x="590" y="355" />
+        <di:waypoint x="615" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1yglxcv_di" bpmnElement="DataOutputAssociation_1yglxcv">
+        <di:waypoint x="1104" y="390" />
+        <di:waypoint x="1073" y="425" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

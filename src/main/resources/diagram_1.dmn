@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1xozgd5" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <decision id="Decision_080e817" name="Angebot">
+    <informationRequirement id="InformationRequirement_1do7t5b">
+      <requiredInput href="#InputData_0sypxcp" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0kq1r0c">
+      <requiredInput href="#InputData_0qhlaub" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1p7j3w4">
+      <requiredInput href="#InputData_1e5kkxl" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0uvogke" hitPolicy="FIRST">
+      <input id="Input_1" label="Risiko">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>risikobewertung</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1j2coac" label="Versicherungssumme" biodi:width="192">
+        <inputExpression id="LiteralExpression_05z1jhn" typeRef="long">
+          <text>versicherungssumme</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_061unhc" label="Lebensversicherungsprodukt">
+        <inputExpression id="LiteralExpression_1uoroea" typeRef="string">
+          <text>lebensversicherungsprodukt</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0d9hp19">
+          <text>"Lebensversicherung1","Lebensversicherung2","Lebensversicherung3"</text>
+        </inputValues>
+      </input>
+      <output id="Output_1" label="Angebot" typeRef="string" />
+      <rule id="DecisionRule_1xe993w">
+        <inputEntry id="UnaryTests_0et5orj">
+          <text>&lt; 5001</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1mwnk61">
+          <text>&lt;= 9000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_047qccl">
+          <text>"Lebensversicherung1","Lebensversicherung2","Lebensversicherung3"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1o2aw5v">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_07wkz00">
+        <inputEntry id="UnaryTests_029rcis">
+          <text>&lt; 8001</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_18q7gzx">
+          <text>&lt;= 5000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0oke8mp">
+          <text>"Lebensversicherung1","Lebensversicherung2","Lebensversicherung3"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_05kyh3b">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0066ujb">
+        <inputEntry id="UnaryTests_0svpmaz">
+          <text>&lt; 5001</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0klytvy">
+          <text>&lt;= 10000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ddfkvk">
+          <text>"Lebensversicherung2","Lebensversicherung3"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0cdfa9x">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0uon5bh">
+        <inputEntry id="UnaryTests_19o8ovr">
+          <text>&lt; 8001</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03ko1aw">
+          <text>&lt;= 7000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gukutw">
+          <text>"Lebensversicherung2","Lebensversicherung3"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0j24mz5">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1wm66q1">
+        <inputEntry id="UnaryTests_0cibga8">
+          <text>&lt; 5001</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1mfu09z">
+          <text>&lt;= 20000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0c4ycs1">
+          <text>"Lebensversicherung3"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0h36pl3">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0tqt4il">
+        <inputEntry id="UnaryTests_1e9luqp">
+          <text>&lt; 8001</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_173gfl2">
+          <text>&lt;= 13000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_13w4jnb">
+          <text>"Lebensversicherung3"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1gvj6f7">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ql9yvz">
+        <inputEntry id="UnaryTests_1jfmibc">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_07k8gm0">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_04lqs7b">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mk3qny">
+          <text>Die von Ihnen gewünschten Konditionen sind leider nicht verfügbar, bitte wenden Sie sich an unseren Kundenservice.</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_0sypxcp" name="risiko" />
+  <inputData id="InputData_0qhlaub" name="versicherungssumme" />
+  <inputData id="InputData_1e5kkxl" name="lebensversicherungsprodukt" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_080e817">
+        <dc:Bounds height="80" width="180" x="400" y="160" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0v87e1a" dmnElementRef="InputData_0sypxcp">
+        <dc:Bounds height="45" width="125" x="148" y="68" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1tnpcdk" dmnElementRef="InputData_0qhlaub">
+        <dc:Bounds height="45" width="125" x="149" y="178" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0fcg2ao" dmnElementRef="InputData_1e5kkxl">
+        <dc:Bounds height="45" width="125" x="148" y="288" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1pw2es6" dmnElementRef="InformationRequirement_1do7t5b">
+        <di:waypoint x="211" y="113" />
+        <di:waypoint x="490" y="140" />
+        <di:waypoint x="490" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1oq7hxp" dmnElementRef="InformationRequirement_0kq1r0c">
+        <di:waypoint x="274" y="201" />
+        <di:waypoint x="380" y="200" />
+        <di:waypoint x="400" y="200" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1djl9ft" dmnElementRef="InformationRequirement_1p7j3w4">
+        <di:waypoint x="211" y="288" />
+        <di:waypoint x="490" y="260" />
+        <di:waypoint x="490" y="240" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
