@@ -169,6 +169,21 @@
     <bpmn:userTask id="UserTask_AngebotErstellen" name="Angebot erstellen">
       <bpmn:extensionElements>
         <camunda:formData>
+          <camunda:formField id="risikobewertung" label="Risikobewertung" type="long" defaultValue="${risikobewertung}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="versicherungssumme" label="Versicherungssumme" type="long" defaultValue="${versicherungssumme}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="lebensversicherungsprodukt" label="Lebensversicherungsprodukt" type="string" defaultValue="${lebensversicherungsprodukt}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
           <camunda:formField id="text" label="Text" type="string" />
         </camunda:formData>
       </bpmn:extensionElements>
