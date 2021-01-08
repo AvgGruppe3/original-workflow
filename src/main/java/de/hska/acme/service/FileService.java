@@ -25,6 +25,7 @@ public class FileService {
     private String fileName;
 
     public void writeToFile(Customer newCustomer) throws IOException {
+        logger.info("Start writing customer to a file");
         ObjectMapper mapper = new ObjectMapper();
         File file = new File(fileName);
         List<Customer> customers = new ArrayList<>();
@@ -47,5 +48,7 @@ public class FileService {
         PrintWriter out = new PrintWriter(new FileWriter(file, true));
         out.append(string);
         out.close();
+
+        logger.info("Writing is completed");
     }
 }

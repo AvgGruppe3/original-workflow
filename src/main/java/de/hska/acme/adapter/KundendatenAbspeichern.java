@@ -6,12 +6,16 @@ import de.hska.acme.service.RestClient;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class KundendatenAbspeichern implements JavaDelegate {
+
+    private final Logger logger = LoggerFactory.getLogger(KundendatenAbspeichern.class);
 
     private final RestClient restClient;
 
@@ -22,6 +26,8 @@ public class KundendatenAbspeichern implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        logger.info("KundendatenAbspeichern entry");
+
         Customer customer = new Customer().createFromProcessVariablesWithRiskScore(execution);
         try {
             Customer responseCustomer = restClient.getCustomer(customer);
@@ -33,5 +39,6 @@ public class KundendatenAbspeichern implements JavaDelegate {
         } catch(Exception e){
             throw new BpmnError("Error");
         }
+        logger.info("KundendatenAbspeichern exit");
     }
 }
