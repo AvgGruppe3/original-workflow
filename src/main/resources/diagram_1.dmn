@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1xozgd5" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
-  <decision id="Decision_080e817" name="Angebot">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_Angebot" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <decision id="Decision_Angebot" name="Angebot">
     <informationRequirement id="InformationRequirement_1do7t5b">
-      <requiredInput href="#InputData_0sypxcp" />
+      <requiredInput href="#risikobewertung" />
     </informationRequirement>
     <informationRequirement id="InformationRequirement_0kq1r0c">
-      <requiredInput href="#InputData_0qhlaub" />
+      <requiredInput href="#versicherungssumme" />
     </informationRequirement>
     <informationRequirement id="InformationRequirement_1p7j3w4">
-      <requiredInput href="#InputData_1e5kkxl" />
+      <requiredInput href="#lebensversicherungsprodukt" />
     </informationRequirement>
     <decisionTable id="DecisionTable_0uvogke" hitPolicy="FIRST">
-      <input id="Input_1" label="Risiko">
-        <inputExpression id="InputExpression_1" typeRef="string">
+      <input id="Input_1" label="Risikobewertung">
+        <inputExpression id="InputExpression_1" typeRef="long">
           <text>risikobewertung</text>
         </inputExpression>
       </input>
@@ -21,7 +21,7 @@
           <text>versicherungssumme</text>
         </inputExpression>
       </input>
-      <input id="InputClause_061unhc" label="Lebensversicherungsprodukt">
+      <input id="InputClause_061unhc" label="Lebensversicherungsprodukt" biodi:width="247">
         <inputExpression id="LiteralExpression_1uoroea" typeRef="string">
           <text>lebensversicherungsprodukt</text>
         </inputExpression>
@@ -29,7 +29,7 @@
           <text>"Lebensversicherung1","Lebensversicherung2","Lebensversicherung3"</text>
         </inputValues>
       </input>
-      <output id="Output_1" label="Angebot" typeRef="string" />
+      <output id="Output_1" label="Angebot" name="text" typeRef="string" />
       <rule id="DecisionRule_1xe993w">
         <inputEntry id="UnaryTests_0et5orj">
           <text>&lt; 5001</text>
@@ -41,7 +41,7 @@
           <text>"Lebensversicherung1","Lebensversicherung2","Lebensversicherung3"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1o2aw5v">
-          <text></text>
+          <text>"1"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_07wkz00">
@@ -55,7 +55,7 @@
           <text>"Lebensversicherung1","Lebensversicherung2","Lebensversicherung3"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_05kyh3b">
-          <text></text>
+          <text>"2"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0066ujb">
@@ -69,7 +69,7 @@
           <text>"Lebensversicherung2","Lebensversicherung3"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0cdfa9x">
-          <text></text>
+          <text>"3"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0uon5bh">
@@ -83,7 +83,7 @@
           <text>"Lebensversicherung2","Lebensversicherung3"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0j24mz5">
-          <text></text>
+          <text>"4"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1wm66q1">
@@ -97,7 +97,7 @@
           <text>"Lebensversicherung3"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0h36pl3">
-          <text></text>
+          <text>"5"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0tqt4il">
@@ -111,7 +111,7 @@
           <text>"Lebensversicherung3"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1gvj6f7">
-          <text></text>
+          <text>"6"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1ql9yvz">
@@ -125,26 +125,26 @@
           <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1mk3qny">
-          <text>Die von Ihnen gewünschten Konditionen sind leider nicht verfügbar, bitte wenden Sie sich an unseren Kundenservice.</text>
+          <text>"Die von Ihnen gewünschten Konditionen sind leider nicht verfügbar, bitte wenden Sie sich an unseren Kundenservice."</text>
         </outputEntry>
       </rule>
     </decisionTable>
   </decision>
-  <inputData id="InputData_0sypxcp" name="risiko" />
-  <inputData id="InputData_0qhlaub" name="versicherungssumme" />
-  <inputData id="InputData_1e5kkxl" name="lebensversicherungsprodukt" />
+  <inputData id="risikobewertung" name="risikobewertung" />
+  <inputData id="versicherungssumme" name="versicherungssumme" />
+  <inputData id="lebensversicherungsprodukt" name="lebensversicherungsprodukt" />
   <dmndi:DMNDI>
     <dmndi:DMNDiagram>
-      <dmndi:DMNShape dmnElementRef="Decision_080e817">
+      <dmndi:DMNShape dmnElementRef="Decision_Angebot">
         <dc:Bounds height="80" width="180" x="400" y="160" />
       </dmndi:DMNShape>
-      <dmndi:DMNShape id="DMNShape_0v87e1a" dmnElementRef="InputData_0sypxcp">
+      <dmndi:DMNShape id="DMNShape_0v87e1a" dmnElementRef="risikobewertung">
         <dc:Bounds height="45" width="125" x="148" y="68" />
       </dmndi:DMNShape>
-      <dmndi:DMNShape id="DMNShape_1tnpcdk" dmnElementRef="InputData_0qhlaub">
+      <dmndi:DMNShape id="DMNShape_1tnpcdk" dmnElementRef="versicherungssumme">
         <dc:Bounds height="45" width="125" x="149" y="178" />
       </dmndi:DMNShape>
-      <dmndi:DMNShape id="DMNShape_0fcg2ao" dmnElementRef="InputData_1e5kkxl">
+      <dmndi:DMNShape id="DMNShape_0fcg2ao" dmnElementRef="lebensversicherungsprodukt">
         <dc:Bounds height="45" width="125" x="148" y="288" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_1pw2es6" dmnElementRef="InformationRequirement_1do7t5b">
