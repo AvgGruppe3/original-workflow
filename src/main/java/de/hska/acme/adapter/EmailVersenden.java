@@ -24,6 +24,7 @@ public class EmailVersenden implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        logger.info("EmailVersenden entry");
         try {
             emailService.sendEmail(new Email(String.valueOf(execution.getVariable("text"))));
             logger.info("successfully sent an e-mail");

@@ -27,6 +27,7 @@ public class KundendatenAbrufen implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        logger.info("KundendatenAbrufen entry");
         Customer customer = new Customer().createFromProcessVariables(execution);
         boolean newCustomer;
         try {
@@ -40,5 +41,6 @@ public class KundendatenAbrufen implements JavaDelegate {
             throw new BpmnError("Error");
         }
         execution.setVariable("nk", newCustomer);
+        logger.info("KundendatenAbrufen exit");
     }
 }

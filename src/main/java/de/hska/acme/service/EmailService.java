@@ -21,6 +21,7 @@ public class EmailService {
     }
 
     public void sendEmail(Email email) {
+        logger.info("Start sending an e-mail");
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(email.getFrom());
         msg.setTo(email.getTo());
