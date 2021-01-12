@@ -35,13 +35,13 @@
           <text>&lt; 5001</text>
         </inputEntry>
         <inputEntry id="UnaryTests_1mwnk61">
-          <text>&lt;= 9000</text>
+          <text>&lt;= 1000000</text>
         </inputEntry>
         <inputEntry id="UnaryTests_047qccl">
-          <text>"Lebensversicherung1","Lebensversicherung2","Lebensversicherung3"</text>
+          <text>"Lebensversicherung1"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1o2aw5v">
-          <text>"1"</text>
+          <text>"Gerne machen wir Ihnen ein Angebot zu den von Ihnen gewünschten Konditionen für die Lebensversicherung1"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_07wkz00">
@@ -49,13 +49,13 @@
           <text>&lt; 8001</text>
         </inputEntry>
         <inputEntry id="UnaryTests_18q7gzx">
-          <text>&lt;= 5000</text>
+          <text>&lt;= 500000</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0oke8mp">
-          <text>"Lebensversicherung1","Lebensversicherung2","Lebensversicherung3"</text>
+          <text>"Lebensversicherung1"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_05kyh3b">
-          <text>"2"</text>
+          <text>"Gerne machen wir Ihnen ein Angebot zu den von Ihnen gewünschten Konditionen für die Lebensversicherung1"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0066ujb">
@@ -63,13 +63,13 @@
           <text>&lt; 5001</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0klytvy">
-          <text>&lt;= 10000</text>
+          <text>&lt;= 4000000</text>
         </inputEntry>
         <inputEntry id="UnaryTests_1ddfkvk">
-          <text>"Lebensversicherung2","Lebensversicherung3"</text>
+          <text>"Lebensversicherung2"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0cdfa9x">
-          <text>"3"</text>
+          <text>"Gerne machen wir Ihnen ein Angebot zu den von Ihnen gewünschten Konditionen für die Lebensversicherung2"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0uon5bh">
@@ -77,13 +77,13 @@
           <text>&lt; 8001</text>
         </inputEntry>
         <inputEntry id="UnaryTests_03ko1aw">
-          <text>&lt;= 7000</text>
+          <text>&lt;= 2000000</text>
         </inputEntry>
         <inputEntry id="UnaryTests_1gukutw">
-          <text>"Lebensversicherung2","Lebensversicherung3"</text>
+          <text>"Lebensversicherung2"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0j24mz5">
-          <text>"4"</text>
+          <text>"Gerne machen wir Ihnen ein Angebot zu den von Ihnen gewünschten Konditionen für die Lebensversicherung2"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1wm66q1">
@@ -91,13 +91,13 @@
           <text>&lt; 5001</text>
         </inputEntry>
         <inputEntry id="UnaryTests_1mfu09z">
-          <text>&lt;= 20000</text>
+          <text>&lt;= 8000000</text>
         </inputEntry>
         <inputEntry id="UnaryTests_0c4ycs1">
           <text>"Lebensversicherung3"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0h36pl3">
-          <text>"5"</text>
+          <text>"Gerne machen wir Ihnen ein Angebot zu den von Ihnen gewünschten Konditionen für die Lebensversicherung3"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0tqt4il">
@@ -105,13 +105,13 @@
           <text>&lt; 8001</text>
         </inputEntry>
         <inputEntry id="UnaryTests_173gfl2">
-          <text>&lt;= 13000</text>
+          <text>&lt;= 5000000</text>
         </inputEntry>
         <inputEntry id="UnaryTests_13w4jnb">
           <text>"Lebensversicherung3"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1gvj6f7">
-          <text>"6"</text>
+          <text>"Gerne machen wir Ihnen ein Angebot zu den von Ihnen gewünschten Konditionen für die Lebensversicherung3"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1ql9yvz">
@@ -122,10 +122,38 @@
           <text></text>
         </inputEntry>
         <inputEntry id="UnaryTests_04lqs7b">
-          <text></text>
+          <text>"Lebensversicherung1"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1mk3qny">
-          <text>"Die von Ihnen gewünschten Konditionen sind leider nicht verfügbar, bitte wenden Sie sich an unseren Kundenservice."</text>
+          <text>"Die von Ihnen gewünschten Konditionen sind für Lebensversicherung1 leider nicht verfügbar, bitte wenden Sie sich an unseren Kundenservice, dort werden wir Sie gerne weiter beraten."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0u2lsr5">
+        <inputEntry id="UnaryTests_19t2i6k">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_080ik2d">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_07tdhvr">
+          <text>"Lebensversicherung2"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0injjkt">
+          <text>"Die von Ihnen gewünschten Konditionen sind für Lebensversicherung2 leider nicht verfügbar, bitte wenden Sie sich an unseren Kundenservice, dort werden wir Sie gerne weiter beraten."</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1enlt0i">
+        <inputEntry id="UnaryTests_0bp3suw">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_152uumv">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0mx7a94">
+          <text>"Lebensversicherung3"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_190mfly">
+          <text>"Die von Ihnen gewünschten Konditionen sind für Lebensversicherung3 leider nicht verfügbar, bitte wenden Sie sich an unseren Kundenservice, dort werden wir Sie gerne weiter beraten."</text>
         </outputEntry>
       </rule>
     </decisionTable>
